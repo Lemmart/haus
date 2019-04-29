@@ -1,10 +1,10 @@
 class ApartmentController < ApplicationController
+  include ApartmentHelper
   # GET /apartments
   # GET /apartments.json
   def index
     # @user = current_user
-    puts make_post_req
-    @apartments = Apartment.all.order('created_at DESC')
+    @apartments = Apartment.all.order('name')
   end
 
   # GET /apartments/1
@@ -68,6 +68,16 @@ class ApartmentController < ApplicationController
     end
   end
 
+  def refresh
+    Apartment.destroy_all
+    parse_and_create_apartments("https://lexatwaterfrontstation.com/floor-plans", "Lex and Leo")
+    parse_and_create_apartments("https://www.thelurgan.com/floor-plans/", "Lurgan")
+    parse_and_create_apartments("https://www.belvederedc.com/floorplans.aspx","Belvedere")
+    respond_to do |format|
+      format.html { redirect_to :action => "index" }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_apartment
@@ -77,21 +87,5 @@ class ApartmentController < ApplicationController
 
     def create_update_params
       params.require(:apartment).permit(:name, :address, :type, :price, :sq_ft, :unit_num, :bed_bath)
-    end
-
-    def make_post_req
-      # puts("HERE")
-      require 'net/http'
-      # require 'json'
-      begin
-        url = URI.parse('http://www.example.com/index.html')
-        req = Net::HTTP::Get.new(url.to_s)
-        res = Net::HTTP.start(url.host, url.port) {|http|
-          http.request(req)
-        }
-        return res.body
-      rescue => e
-          puts "failed #{e}"
-      end
     end
 end

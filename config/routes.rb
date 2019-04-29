@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
-  # get 'apartment/new'
-  # get 'apartment/edit'
-  # get 'apartment/show'
-  # get 'apartment/index'
   resources :apartments
   root "apartment#index"
+  # get 'refresh', to: 'apartments#refresh', as: :refresh_listings
+  get "refresh", to: "apartment#refresh"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
