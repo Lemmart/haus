@@ -35,10 +35,22 @@ module ApartmentHelper
   end
 
   def parse_and_create_apartments(url, name)
+    require 'date'
     if name =~ /Lex and Leo/
       apts = get_apts(url)
+      dates_available = Nokogiri::HTML(open(url)).at('table').to_s.strip().scan(/data-available=\".*\"/)
+      apt_ct = 0
       apts.each do |listing|
-        create_apt_with_default_params(listing[0].split(' | ')[0].strip, listing[1], listing[2], listing[3], listing[4], listing[5], listing[6], url)
+        date = dates_available[apt_ct].gsub(/^.*=/,'')[/[0-9]+\/[0-9]+\/[0-9]+/].split('/')
+        date[-1] = "20" + date[-1]
+        date = [date[-1].to_i,date[0].to_i,date[1].to_i]
+        if Date.valid_date?(date[0],date[1],date[2]) && Date.parse(date.join("/")) < Date.today
+          date = "Available since: " + Date.parse(date.join("/")).strftime('%m/%d/%Y')
+        else
+          date = Date.parse(date.join("/")).strftime('%m/%d/%Y')
+        end
+        apt_ct += 1
+        create_apt_with_default_params(listing[0].split(' | ')[0].strip, listing[1], listing[2], listing[3], listing[4], listing[5], date, url)
       end
       # puts ">>>>>>>>>>>>>>>"
       # page = Nokogiri::HTML(open(url))
