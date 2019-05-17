@@ -35,6 +35,9 @@ gem "haml-rails", "~> 2.0"
 gem 'bootstrap'
 gem 'jquery-rails'
 
+# convert numbers to words (e.g. 1 -> one)
+gem 'humanize'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

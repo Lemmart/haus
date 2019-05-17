@@ -5,6 +5,23 @@ class ApartmentController < ApplicationController
   def index
     # @user = current_user
     @apartments = Apartment.all.order('name')
+
+    # TODO: add params to session hash to preserve multiple filters (e.g. under $1500 AND sorted by price)
+    i_params = index_params
+    # Filter button clicked
+    if !i_params[:filter_tag].nil?
+      # button filtering
+      @apartments = helpers.filter(i_params[:filter_tag])
+    else
+      @apartments = Apartment.all.order('name')
+    end
+
+    # if !i_params[:filter_tag].nil?
+
+    # end
+    # session[:filter_tag] = i_params[:filter_tag]
+
+
   end
 
   # GET /apartments/1
@@ -72,7 +89,9 @@ class ApartmentController < ApplicationController
     Apartment.destroy_all
     parse_and_create_apartments("https://lexatwaterfrontstation.com/floor-plans", "Lex and Leo")
     parse_and_create_apartments("https://www.thelurgan.com/floor-plans/", "Lurgan")
-    parse_and_create_apartments("https://www.belvederedc.com/floorplans.aspx","Belvedere")
+    parse_and_create_apartments("https://www.belvederedc.com/availableunits.aspx", "Belvedere")
+    parse_and_create_apartments("http://www.claridgehousecooperative.com/availability/lease", "Claridge House")
+    # parse_and_create_apartments("", "")
     respond_to do |format|
       format.html { redirect_to :action => "index" }
     end
@@ -87,5 +106,9 @@ class ApartmentController < ApplicationController
 
     def create_update_params
       params.require(:apartment).permit(:name, :address, :type, :price, :sq_ft, :unit_num, :bed_bath)
+    end
+
+    def index_params
+      params.permit([:filter_tag])
     end
 end
