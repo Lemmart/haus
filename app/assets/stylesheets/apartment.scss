@@ -2,7 +2,25 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#main {
+    background-color: rgb(211,227,252);
+}
+
+td { 
+    background-color:rgb(255,255,255);
+}
+
+th {
+    position: sticky;
+    top: 0;
+}
+
+.pad-top {
+    margin-top: 1%;
+}
+
 .pad-left {
+    color: rgb(0,136,122);
     margin-left: 1%;
 }
 
