@@ -55,7 +55,8 @@
       %tbody
         -@apartments.each do |a|
           %tr
-            -# %td= "checkbox"
+            -# %td(style="text-align: center;")
+            -#   %input#notificationBox(name="mycheckbox" type="checkbox")
             %td= a.name
             %td= "# #{a.unit_num}"
             %td= a.style.blank? ? "?" : a.style

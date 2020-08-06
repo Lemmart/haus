@@ -87,7 +87,7 @@ class ApartmentController < ApplicationController
 
   def refresh
     Apartment.destroy_all
-    parse_and_create_apartments("https://lexatwaterfrontstation.com/floor-plans", "Lex and Leo")
+    parse_and_create_apartments("https://lexandleowaterfront.com/floor-plans", "Lex and Leo")
     parse_and_create_apartments("https://www.thelurgan.com/floor-plans/", "Lurgan")
     parse_and_create_apartments("https://www.belvederedc.com/availableunits.aspx", "Belvedere")
     parse_and_create_apartments("http://www.claridgehousecooperative.com/availability/lease", "Claridge House")

@@ -150,7 +150,14 @@ module ApartmentHelper
   def get_apts(url)
     # https://readysteadycode.com/howto-parse-html-tables-with-nokogiri
     require 'open-uri'
-    page = Nokogiri::HTML(open(url))
+    tries = 0
+    begin
+      page = Nokogiri::HTML(open(url))
+    rescue OpenURI::HTTPRedirect => redirect
+      url = redirect.uri # assigned from the "Location" response header
+      retry if (tries -= 1) > 0
+      raise
+    end
     table = page.at('table')
     apts = []
     table.search('tr').each do |tr|
