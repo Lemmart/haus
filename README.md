@@ -1,24 +1,9 @@
-# README
+# Haus
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project was built to aid in search of housing in Washington D.C.
 
-Things you may want to cover:
+## Purpose:
+Simplify apartment search and streamline key decision-making factors. Ideally built to compare apartments across multiple channels in one marketplace.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Contribution:
+Please feel free to clone and pr against this repository. Additional properties are always welcome.
